@@ -3,4 +3,5 @@ gradle-bintray-plugin.ipr
 gradle-bintray-plugin.iws
 gradle.properties
 .gradle
+build
 src/main/resources/bintray.plugin.release.properties
