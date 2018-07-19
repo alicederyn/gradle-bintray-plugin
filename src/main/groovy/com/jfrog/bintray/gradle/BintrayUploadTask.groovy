@@ -184,7 +184,11 @@ class BintrayUploadTask extends DefaultTask {
     void bintrayUpload() {
         logger.info("Gradle Bintray Plugin version: ${new Utils().pluginVersion}");
         if (shouldSkip()) {
-            logger.info("Skipping task '{}:bintrayUpload' because user or apiKey is null.", this.project.name);
+            if (user == null) {
+                logger.info("Skipping task '{}:bintrayUpload' because user is null.", this.project.name);
+            } else {
+                logger.info("Skipping task '{}:bintrayUpload' because apiKey is null.", this.project.name);
+            }
             return
         }
         validateDebianDefinition()
@@ -433,7 +437,13 @@ class BintrayUploadTask extends DefaultTask {
             http.request(POST, JSON) {
                 Utils.addHeaders(headers)
                 uri.path = "/maven_central_sync/$pkgPath/versions/$versionName"
-                body = [username: ossUser, password: ossPassword]
+                body = []
+                if (ossUser != null) {
+                  body << [username: ossUser]
+                }
+                if (ossPassword != null) {
+                  body << [password: ossPassword]
+                }
                 if (ossCloseRepo != null) {
                     body << [close: ossCloseRepo]
                 }
@@ -588,7 +598,7 @@ class BintrayUploadTask extends DefaultTask {
     }
 
     boolean shouldSyncToMavenCentral() {
-        syncToMavenCentral && ossUser != null && ossPassword != null
+        syncToMavenCentral
     }
 
     Artifact[] collectArtifacts(Configuration config) {

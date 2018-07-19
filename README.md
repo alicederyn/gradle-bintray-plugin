@@ -390,10 +390,10 @@ bintray {
             }
             //Optional configuration for Maven Central sync of the version
             mavenCentralSync {
-                sync = true //[Default: true] Determines whether to sync the version to Maven Central.
-                user = 'userToken' //OSS user token: mandatory
-                password = 'paasword' //OSS user password: mandatory
-                close = '1' //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
+                sync = true // whether to sync the version to Maven Central; optional if user/password are set.
+                user = 'userToken' //OSS user token: optional
+                password = 'paasword' //OSS user password: optional
+                close = '1' //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by putting 0 as value) and release the version manually.
             }            
         }
     }
